@@ -12,7 +12,7 @@ namespace pr
 {
 
 void display_args(char** argv);
-int exo1(int argc, char* argv[]);
+int exercice1(int argc, char* argv[]);
 
 }
 
