@@ -62,10 +62,9 @@ int exercice2()
 
 int main_exo2()
 {
-	int fd = shm_open("shm1", O_CREAT|O_RDWR|O_EXCL, 0666);
+	int fd = shm_open("x", O_CREAT|O_RDWR|O_EXCL, 0666);
 	ftruncate(fd, sizeof(Stack<char>));
 	void* addr = mmap(NULL, sizeof(Stack<char>), PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
-
 
 	Stack<char> * s = new(addr) Stack<char>();
 
@@ -92,7 +91,7 @@ int main_exo2()
 
 int main (int argc, char* argv[])
 {
-	exercice1(argc, argv);
+	// exercice1(argc, argv);
 	exercice2();
 }
 
