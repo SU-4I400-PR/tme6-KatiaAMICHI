@@ -1,4 +1,4 @@
-#ifndef H_CHAT_COMMON
+	#ifndef H_CHAT_COMMON
 #define H_CHAT_COMMON
 
 #define _XOPEN_SOURCE 700

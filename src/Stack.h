@@ -2,6 +2,7 @@
 
 #include <cstring> // size_t,memset
 #include <semaphore.h>
+#include <iostream>
 
 namespace pr {
 
@@ -18,6 +19,9 @@ class Stack {
 	sem_t sem_mtx;
 
 public :
+	int getSize(){
+		return sz;
+	}
 	Stack () : sz(0) {
 		std::cout << "Strack" << std::endl;
 		memset(tab,0,sizeof tab) ;
@@ -44,7 +48,6 @@ public :
 		sem_destroy(&sem_prod);
 		sem_destroy(&sem_mtx);
 		sem_destroy(&sem_cons);
-
 	}
 
 	T pop () {

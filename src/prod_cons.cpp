@@ -14,11 +14,11 @@
 #include "Stack.h"
 
 
-
-
-
 using namespace std;
 using namespace pr;
+
+const size_t N = 10;
+const size_t M = 10;
 
 void producteur (Stack<char> * stack) {
 	std::cout << "producteur" << std::endl;
@@ -36,31 +36,7 @@ void consomateur (Stack<char> * stack) {
 	}
 }
 
-
 int exercice2()
-{
-	Stack<char> * s = new Stack<char>();
-
-	pid_t pp = fork();
-	if (pp==0) {
-		producteur(s);
-		return 0;
-	}
-
-	pid_t pc = fork();
-	if (pc==0) {
-		consomateur(s);
-		return 0;
-	}
-
-	wait(0);
-	wait(0);
-
-	delete s;
-	return 0;
-}
-
-int main_exo2()
 {
 	int fd = shm_open("x", O_CREAT|O_RDWR|O_EXCL, 0666);
 	ftruncate(fd, sizeof(Stack<char>));
@@ -68,19 +44,31 @@ int main_exo2()
 
 	Stack<char> * s = new(addr) Stack<char>();
 
-	pid_t pp = fork();
-	if (pp == 0)
+
+	for(size_t i = 0; i < N; ++i)
 	{
-		producteur(s);
-		return 0;
+		pid_t pp = fork();
+		if (pp == 0)
+		{
+			producteur(s);
+			return 0;
+		}
 	}
 
-	pid_t pc = fork();
-	if (pc == 0)
+	for(size_t i = 0; i < M; ++i)
 	{
-		consomateur(s);
-		return 0;
+		pid_t pc = fork();
+		if (pc == 0)
+		{
+			consomateur(s);
+			return 0;
+		}
 	}
+
+	for(size_t i = 0; i < N; ++i)
+		wait(0);
+	for(size_t i = 0; i < M; ++i)
+		wait(0);
 
 	wait(0);
 	wait(0);
@@ -91,7 +79,7 @@ int main_exo2()
 
 int main (int argc, char* argv[])
 {
-	// exercice1(argc, argv);
-	exercice2();
+	exercice1(argc, argv);
+	//exercice2();
 }
 
